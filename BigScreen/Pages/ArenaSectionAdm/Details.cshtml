@@ -1,0 +1,38 @@
+﻿@page
+@model BigScreen.Pages.ArenaSectionAdm.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ArenaSection</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ArenaSection.Arena)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ArenaSection.Arena.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ArenaSection.SectionHeight)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ArenaSection.SectionHeight)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ArenaSection.SectionWidth)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ArenaSection.SectionWidth)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.ArenaSection.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

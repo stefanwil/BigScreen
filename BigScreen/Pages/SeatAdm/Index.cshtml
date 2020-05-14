@@ -1,0 +1,61 @@
+﻿@page
+@model BigScreen.Pages.SeatAdm.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Seat[0].SectionRow)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Seat[0].SectionColumn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Seat[0].SeatWidth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Seat[0].SeatHeight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Seat[0].ArenaSection)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Seat) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SectionRow)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SectionColumn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SeatWidth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SeatHeight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArenaSection.Id)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.SeatId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.SeatId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.SeatId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

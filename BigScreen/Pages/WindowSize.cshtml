@@ -1,0 +1,212 @@
+﻿@page
+@model BigScreen.Pages.WindowSizeModel
+
+@{
+    ViewData["Title"] = "WindowSize";
+}
+    <video id="video" preload="auto" n width="756" height="1344">
+        <source src="~/Tifos/VID_20200514_123906_d436.mp4" type='video/mp4' />
+        
+
+    </video>
+
+<h1>WindowSize</h1>
+<h1>Demo</h1>
+@*<h2>This is coming from initial load - <span style="color:blueviolet;">@Model.Message</span></h2>*@
+<h2>Get Request Result about display</h2>
+<div id="dvItems" style="font-size:24px;">
+</div>
+<div id="dpix" style="font-size:24px;">
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SetDevice">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DeviceId" class="control-label"></label>
+                <input asp-for="DeviceId" class="form-control" />
+                <span asp-validation-for="DeviceId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="SetDevice" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<input type="button" id="btnPost" value="Post Values">
+<br />
+@Html.AntiForgeryToken()
+<h2 style="color:brown;">Result after Ajax Post</h2>
+<div id="dvPostItems">
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript" language="JavaScript">
+                 var height = screen.height;
+            var width = screen.width;
+        $(document).ready(function () {
+            //var height = $(window).height();
+            var devicePixelRatio = window.devicePixelRatio;
+            var dotsPerInch = getDPI();
+            var videoheight = video.videoHeight;
+            var videowidth = video.videoWidth;
+            height = screen.height;
+            width = screen.width;
+            var div = document.createElement("div");
+            div.style.height = "1in";
+            div.style.width = "1in";
+            div.style.top = "-100%";
+            div.style.left = "-100%";
+            div.style.position = "absolute";
+
+            document.body.appendChild(div);
+
+
+            $.ajax({
+                type: "GET",
+                url: "/WindowSize?handler=List",
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    var dvItems = $("#dvItems");
+                    dvItems.empty();
+                    $.each(response, function (i, item) {
+                        var $tr = $('<li>').append(item).appendTo(dvItems);
+                    });
+                    $('<li>').append(devicePixelRatio).appendTo(dvItems);
+                    $('<li>').append(height).appendTo(dvItems);
+                    $('<li>').append(width).appendTo(dvItems);
+                    $('<li>').append(dotsPerInch).appendTo(dvItems);
+                    $('<li>').append(videowidth).appendTo(dvItems);
+                           $('<li>').append(videoheight).appendTo(dvItems);
+
+
+
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+            $('#btnPost').on('click', function () {
+
+                //var height = $(window).height();
+                //var width = $(window).width();
+                height = screen.height;
+                width = screen.width;
+
+                $.ajax({
+                    type: "POST",
+                    url: "/WindowSize?handler=Send",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    //data: JSON.stringify({
+                    data: JSON.stringify({
+                        'DeviceId':@Model.DeviceId,
+                        'DevicePixelRatio': devicePixelRatio,
+                        'Height': height,
+                        'Width': width,
+                        'DotsPerInch': dotsPerInch
+
+                    }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        var dvItems = $("#dvPostItems");
+                        dvItems.empty();
+                        $.each(response, function (i, item) {
+                            var $tr = $('<li>').append(item).appendTo(dvItems);
+                        });
+                    },
+                    failure: function (response) {
+                        alert(response);
+                    }
+                });
+
+            })
+        })
+
+        //window.onresize = function (event) {
+        //    SetWidthHeight();
+        //}
+        //function SetWidthHeight() {
+        //    var height = $(window).height();
+        //    var width = $(window).width();
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "/WindowSize?handler=Send",
+        //        beforeSend: function (xhr) {
+        //            xhr.setRequestHeader("XSRF-TOKEN",
+        //                $('input:hidden[name="__RequestVerificationToken"]').val());
+        //        },
+
+
+        //        data: {
+        //            'Height': height,
+        //            'Width': width
+        //        },
+
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: function (response) {
+        //            var dvItems = $("#dvPostItems");
+        //            dvItems.empty();
+        //            $.each(response, function (i, item) {
+        //                var $tr = $('<li>').append(item).appendTo(dvItems);
+        //            });
+        //        },
+        //        failure: function (response) {
+        //            alert(response);
+        //        }
+        //    })
+        //        .done(function (data) {
+        //            if (data.isFirst) {
+        //                window.location.reload();
+        //            };
+        //        }).fail(function (xhr) {
+        //            alert("Problem to retrieve browser size.");
+        //        });
+
+        //}
+        //$(function () {
+        //    SetWidthHeight();
+        //});
+        function getDPI() {
+            var div = $("#dpix");
+            div = document.createElement("div");
+
+            div.style.height = "1in";
+
+            div.style.width = "1in";
+
+            div.style.top = "-100%";
+
+            div.style.left = "-100%";
+
+            div.style.position = "absolute";
+
+
+
+            document.body.appendChild(div);
+
+
+
+            var result = div.offsetHeight;
+
+
+
+            //document.body.removeChild( div );
+
+
+
+            return result;
+
+
+
+        }
+    </script>
+}
+

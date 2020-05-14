@@ -1,0 +1,66 @@
+﻿@page
+@model BigScreen.Pages.TifoPartScreenAdm.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>TifoPartScreen</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TifoPartScreen.Id" />
+            <div class="form-group">
+                <label asp-for="TifoPartScreen.Width" class="control-label"></label>
+                <input asp-for="TifoPartScreen.Width" class="form-control" />
+                <span asp-validation-for="TifoPartScreen.Width" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TifoPartScreen.TifoPartScreenHeight" class="control-label"></label>
+                <input asp-for="TifoPartScreen.TifoPartScreenHeight" class="form-control" />
+                <span asp-validation-for="TifoPartScreen.TifoPartScreenHeight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TifoPartScreen.TifoPartScreenWidth" class="control-label"></label>
+                <input asp-for="TifoPartScreen.TifoPartScreenWidth" class="form-control" />
+                <span asp-validation-for="TifoPartScreen.TifoPartScreenWidth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TifoPartScreen.AbsScreenHeight" class="control-label"></label>
+                <input asp-for="TifoPartScreen.AbsScreenHeight" class="form-control" />
+                <span asp-validation-for="TifoPartScreen.AbsScreenHeight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TifoPartScreen.AbsScreenWidth" class="control-label"></label>
+                <input asp-for="TifoPartScreen.AbsScreenWidth" class="form-control" />
+                <span asp-validation-for="TifoPartScreen.AbsScreenWidth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TifoPartScreen.DotsPerPixel" class="control-label"></label>
+                <input asp-for="TifoPartScreen.DotsPerPixel" class="form-control" />
+                <span asp-validation-for="TifoPartScreen.DotsPerPixel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TifoPartScreen.DotsPerInch" class="control-label"></label>
+                <input asp-for="TifoPartScreen.DotsPerInch" class="form-control" />
+                <span asp-validation-for="TifoPartScreen.DotsPerInch" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,56 @@
+﻿@page
+@model BigScreen.Pages.TifoAdm.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Tifo</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tifo.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tifo.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tifo.Path)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tifo.Path)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tifo.ContentType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tifo.ContentType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tifo.LengthOfMedia)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tifo.LengthOfMedia)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tifo.TifoHeight)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tifo.TifoHeight)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tifo.TifoWidth)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tifo.TifoWidth)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Tifo.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

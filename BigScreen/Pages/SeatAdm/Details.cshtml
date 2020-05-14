@@ -1,0 +1,50 @@
+﻿@page
+@model BigScreen.Pages.SeatAdm.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Seat</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Seat.SectionRow)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Seat.SectionRow)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Seat.SectionColumn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Seat.SectionColumn)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Seat.SeatWidth)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Seat.SeatWidth)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Seat.SeatHeight)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Seat.SeatHeight)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Seat.ArenaSection)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Seat.ArenaSection.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Seat.SeatId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

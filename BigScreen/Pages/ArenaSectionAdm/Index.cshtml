@@ -1,0 +1,49 @@
+﻿@page
+@model BigScreen.Pages.ArenaSectionAdm.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ArenaSection[0].Arena)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArenaSection[0].SectionHeight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArenaSection[0].SectionWidth)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ArenaSection) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Arena.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SectionHeight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SectionWidth)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
