@@ -13,10 +13,10 @@ namespace BigScreen.Pages.TifoAdm
 {
     public class CreateModel : PageModel
     {
-        private readonly BigScreen.Models.BigScreenContext _context;
+        private readonly BigScreen.Data.BigScreenContext _context;
         private readonly IHostingEnvironment hostingEnvironment;
 
-        public CreateModel(BigScreen.Models.BigScreenContext context, IHostingEnvironment environment)
+        public CreateModel(BigScreen.Data.BigScreenContext context, IHostingEnvironment environment)
         {
             _context = context;
             hostingEnvironment = environment;

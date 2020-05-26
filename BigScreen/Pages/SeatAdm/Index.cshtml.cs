@@ -11,9 +11,9 @@ namespace BigScreen.Pages.SeatAdm
 {
     public class IndexModel : PageModel
     {
-        private readonly BigScreen.Models.BigScreenContext _context;
+        private readonly BigScreen.Data.BigScreenContext _context;
 
-        public IndexModel(BigScreen.Models.BigScreenContext context)
+        public IndexModel(BigScreen.Data.BigScreenContext context)
         {
             _context = context;
         }

@@ -12,9 +12,9 @@ namespace BigScreen.Pages.SeatAdm
 {
     public class EditModel : PageModel
     {
-        private readonly BigScreen.Models.BigScreenContext _context;
+        private readonly BigScreen.Data.BigScreenContext _context;
 
-        public EditModel(BigScreen.Models.BigScreenContext context)
+        public EditModel(BigScreen.Data.BigScreenContext context)
         {
             _context = context;
         }

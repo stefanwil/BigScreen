@@ -28,10 +28,10 @@ namespace BigScreen
 
                 var config = host.Services.GetRequiredService<IConfiguration>();
 
-                // dotnet user-secrets set  "LexiconLMS:AdminPW" "Q1!qwerty"
+                // dotnet user-secrets set  "CanvasDemo:AdminPW" "Q1!qwerty"
                 //mha developer command prompt på platsen där .csproj för projektet finns
                 // eller i Manage user secrets mha högerklick på projektet
-                //  "LexiconLMS:AdminPW": "Q1!qwerty"
+                //  "CanvasDemo:AdminPW": "Q1!qwerty"
                 var AdminPw = config["CanvasDemo:AdminPW"];
                 try
                 {

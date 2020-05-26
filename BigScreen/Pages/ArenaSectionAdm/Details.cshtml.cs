@@ -11,9 +11,9 @@ namespace BigScreen.Pages.ArenaSectionAdm
 {
     public class DetailsModel : PageModel
     {
-        private readonly BigScreen.Models.BigScreenContext _context;
+        private readonly BigScreen.Data.BigScreenContext _context;
 
-        public DetailsModel(BigScreen.Models.BigScreenContext context)
+        public DetailsModel(BigScreen.Data.BigScreenContext context)
         {
             _context = context;
         }

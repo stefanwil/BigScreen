@@ -1,0 +1,60 @@
+﻿@page
+@model BigScreen.Pages.ArenaEventSeatUserAdm.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ArenaEventSeat[0].ArenaEvent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArenaEventSeat[0].Seat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArenaEventSeat[0].UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArenaEventSeat[0].Registered)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ArenaEventSeat) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArenaEvent.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Seat.SeatId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Registered)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.( */ }) |
+                @Html.ActionLink("Delete", "Delete", new { arenaEventId = item.ArenaEventId, seatId = item.SeatId })|
+                <a href="@Url.Page("./Delete",new { arenaEventId = item.ArenaEventId, seatId = item.SeatId })">Delete</a>
+
+                @*<a asp-page="./Delete" asp-route-id="@{new { arenaEventId = item.ArenaEventId, seatId = item.SeatId  }}">Delete</a>*@
+            
+                <a asp-page="./Delete" asp-route-arenaEventId="@item.ArenaEventId" asp-route-seatId="@item.SeatId">Delete</a>
+            </td>
+
+</tr>
+}
+    </tbody>
+</table>

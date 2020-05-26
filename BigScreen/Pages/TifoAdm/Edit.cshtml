@@ -13,6 +13,17 @@
     @TempData["SuccessText"]
 </div>
 
+
+@*<video id="video" preload="auto" hidden width="5000" height="1000">
+    <source src="~/WP_20190701_09_07_49_Pro.mp4" type='video/mp4' />
+
+
+    </video>*@
+<video id="video" preload="auto" >
+    <source src="~/tifos/@Model.Tifo.Path.ToString()" type='@Model.Tifo.ContentType.ToString()' />
+
+
+</video>
 <h1>Edit</h1>
 
 <h4>Tifo</h4>
@@ -22,6 +33,7 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Tifo.Id" />
+
             <div class="form-group">
                 <label asp-for="Tifo.Title" class="control-label"></label>
                 <input asp-for="Tifo.Title" class="form-control" />

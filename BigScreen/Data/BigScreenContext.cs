@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BigScreen.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace BigScreen.Models
+namespace BigScreen.Data
 {
     //    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
@@ -91,7 +91,9 @@ namespace BigScreen.Models
         public DbSet<BigScreen.Models.UserSeat> UserSeat { get; set; }
         public DbSet<BigScreen.Models.ArenaSection> ArenaSection { get; set; }
         public DbSet<BigScreen.Models.ArenaEventSeat> ArenaEventSeat { get; set; }
-      
+        public DbSet<BigScreen.Models.TifoGroup> TifoGroup { get; set; }
+        public DbSet<BigScreen.Models.Ticket> Ticket { get; set; }
+
 
     }
 }

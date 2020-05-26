@@ -19,7 +19,10 @@ namespace BigScreen.Models
         public string SeatWidth { get; set; }  //In Millimeters
         [Display(Name = "Höjd")]
         public string SeatHeight { get; set; }
-       
+        [Display(Name = "Bredd")]
+        public int SeatWidthInt { get; set; }  //In Millimeters
+        [Display(Name = "Höjd")]
+        public int SeatHeightInt { get; set; }
         public int ArenaSectionId { get; set; } //FK
         public ArenaSection ArenaSection { get; set; }
         public ICollection<UserSeat> UserSeats { get; set; }

@@ -1,0 +1,57 @@
+﻿
+@page
+@model BigScreen.Pages.TicketAdm.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Ticket</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Ticket.Id" />
+            <div class="form-group">
+                <label asp-for="Ticket.Title" class="control-label"></label>
+                <input asp-for="Ticket.Title" class="form-control" />
+                <span asp-validation-for="Ticket.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ticket.ArenaEventId" class="control-label"></label>
+                <select asp-for="Ticket.ArenaEventId" class="form-control" asp-items="ViewBag.ArenaEventId"></select>
+                <span asp-validation-for="Ticket.ArenaEventId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ticket.SeatId" class="control-label"></label>
+                <select asp-for="Ticket.SeatId" class="form-control" asp-items="ViewBag.SeatId"></select>
+                <span asp-validation-for="Ticket.SeatId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ticket.TifoId" class="control-label"></label>
+                <select asp-for="Ticket.TifoId" class="form-control" asp-items="ViewBag.TifoId"></select>
+                <span asp-validation-for="Ticket.SeatId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Ticket.ApplicationUserId" class="control-label"></label>
+                <select asp-for="Ticket.ApplicationUserId" class="form-control" asp-items="ViewBag.ApplicationUserId"></select>
+                <span asp-validation-for="Ticket.ApplicationUserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

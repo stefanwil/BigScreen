@@ -1,0 +1,355 @@
+﻿@page
+@model BigScreen.Pages.TicketAdm.PlayTicketModel
+@{
+    ViewData["Title"] = "PlayTicket";
+}
+@{var test = Model.Ticket; }
+
+@*<video id="video" preload="auto" hidden width="5000" height="1000">
+    <source src="~/WP_20190701_09_07_49_Pro.mp4" type='video/mp4' />
+
+
+    </video>*@
+<video id="video" preload="auto" hidden width="@test.Tifo.TifoWidth.ToString()" height="@test.Tifo.TifoHeight.ToString()">
+    <source src="~/tifos/@test.Tifo.Path.ToString()" type='@test.Tifo.ContentType.ToString()' />
+
+
+</video>
+
+
+<button id="PlayTicket1">PlayTicket </button>
+<br />
+<p>@test.ArenaEvent.EventDate.ToString()</p>
+<div>
+    <table class="table table-bordered table-condensed">
+        <tr>
+            <th>Play</th>
+
+        <tr>
+            <td>
+                <a onclick="PlayTicket2('@test.ArenaEvent.EventDate.ToString()',@test.Tifo.TifoWidth,@test.Tifo.TifoHeight,@test.Seat.ArenaSection.SectionWidth,@test.Seat.ArenaSection.SectionHeight,@test.Seat.SeatWidthInt*@(test.Seat.SectionColumn-1)*@test.Tifo.TifoWidth/@test.Seat.ArenaSection.SectionWidth,@test.Seat.SeatHeightInt*@(test.Seat.SectionRow-1)*@test.Tifo.TifoHeight/@test.Seat.ArenaSection.SectionHeight)" href="#">Playticket2</a> @*Sätets storlek direkt i mm*@
+            </td>
+
+        </tr>
+
+    </table>
+</div>
+<div>
+    <table class="table table-bordered table-condensed">
+        <tr>
+            <td>
+                <a onclick="AlertName('Du testade')" href="#">Testa</a>
+            </td>
+
+        </tr>
+
+    </table>
+</div>
+<canvas id="canvas" width="1280" height="720" style="border:1px solid #d3d3d3;">    </canvas>
+<p id="demo"></p>
+
+
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<input type="hidden" asp-for="Ticket.ArenaEvent.EventDate" />*@
+            @*Oklart vad jag tänkte att dett används för, ger exception*@
+            <input type="hidden" asp-for="@test.ArenaEvent.EventName" />
+            <input type="hidden" asp-for="@test.ArenaEvent.EventDate" />
+            <input type="hidden" asp-for="@test.Tifo" />
+            <div class="form-group">
+                <input type="submit" value="PlayTicket" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<h1>PlayTicket NU</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket.ArenaEvent.EventName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket.Seat.SectionColumn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket.Seat.SectionRow)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.Ticket.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Ticket.ArenaEvent.EventName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Ticket.Seat.SectionColumn)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Ticket.Seat.SectionRow)
+            </td>
+
+        </tr>
+
+    </tbody>
+</table>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript" language="JavaScript">
+        //Stefan, Se WebAppCamvas för ursprungsexempel
+        /*// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+// for details on configuring this project to bundle and minify static web assets.
+
+// Write your JavaScript code.
+// JavaScript source code
+//canvasa=$(function () {
+//    var canvas = document.getElementById('canvas');
+//    var ctx = canvas.getContext('2d');
+//    var video = document.getElementById('video');
+
+//    video.addEventListener('play', function () {
+//        var $this = this; //cache
+//        (function loop() {
+//            if (!$this.paused && !$this.ended) {
+//                ctx.drawImage($this, 100, 50);
+//                setTimeout(loop, 1000 / 30); // drawing at 30fps
+//            }
+//        })();
+//    }, 0);
+//});
+// JavaScript source code
+//JavaScript syntax: context.drawImage(img, sx, sy, swidth, sheight, x, y, width, height);
+//Parameter Values
+//Parameter	Description	Play it
+//img	Specifies the image, canvas, or video element to use
+//sx	Optional.The x coordinate where to start clipping, /Stefan Unit ?
+//sy	Optional.The y coordinate where to start clipping
+//swidth	Optional.The width of the clipped image
+//sheight	Optional.The height of the clipped image
+//x	The x coordinate where to place the image on the canvas
+//y	The y coordinate where to place the image on the canvas
+//width	Optional.The width of the image to use(stretch or reduce the image)
+//height	Optional.The height of the image to use(stretch or reduce the image)
+
+//canvasb = $(function () {
+var canvas = document.getElementById('canvas');
+*/
+
+        var drawImageimg;
+        var drawImagesx;
+        var drawImagesy;
+        var drawImageswidth;
+        var drawImagesheight;
+        var drawImagex;
+        var drawImagey;
+        var drawImagewidth;
+        var drawImageheight;
+
+
+        function fullscreen() {
+            var el = document.getElementById('canvas');
+
+            if (el.webkitRequestFullScreen) {
+                el.webkitRequestFullScreen();
+            }
+            else {
+                el.mozRequestFullScreen();
+            }
+        }
+
+
+        canvas.addEventListener("click", fullscreen);
+
+
+
+
+
+        var ctx = canvas.getContext('2d');
+        //canvas.offsetLeft = canvas.width / 2;
+        var video = document.getElementById('video');
+
+        function AlertName(name) {
+            alert('You clicked ' + name + "!");
+        }
+
+
+
+        function PlayTicket2(time, tifowidth, tifoheight, sectionwidth, sectionheight, sectionoffsetx, sectionoffsety) {
+            var devicePixelRatio = window.devicePixelRatio;
+            var dotsPerInch = getDPI();
+               drawImageimg = video;  //videon som skall spelas upp
+            drawImageswidth = (screen.width * 25.4* tifowidth)/ (dotsPerInch *sectionwidth );//Displayens Screenwidt in css-pixels dividerat med antalpixels per tum
+            //för displayen*videons bredd/arena sectionens bredd => bredden på det utklippta området i pixels (eller csspixels)
+            drawImagesheight = (screen.height* 25.4* tifoheight ) / (dotsPerInch *sectionheight );
+          //window.width = 2 * $(window).width();
+            //Test med två fönster bredvid varandra på datorn 
+            //drawImageswidth = ($(window).width() / dotsPerInch * 25.4) * tifowidth / sectionwidth  //Displayens Screenwidt in css-pixels dividerat med antalpixels per tum
+            ////för displayen*videons bredd/arena sectionens bredd => bredden på det utklippta området i pixels (eller csspixels)
+            //drawImagesheight = ($(window).height() / dotsPerInch * 25.4) * tifoheight / sectionheight
+                    //canvas.width = $(window).width();
+            //canvas.height = $(window).height();
+            //Slut test
+
+
+            canvas.width = screen.width ;  //Använd hela skärmen
+            canvas.height = screen.height ;
+            //canvas.style.width = screen.width;
+            //canvas.style.height = screen.height;
+
+            drawImagesx = sectionoffsetx;
+            drawImagesy = sectionoffsety;  //Offset in Part to render in original
+            //             //drawImageswidth = canvas.width / (sectionwidth/seatwidth);
+            //             //drawImagesheight = canvas.height / (sectionheight / seatheight);
+            //drawImageswidth = video.videoWidth / (sectionwidth/seatwidth);
+            //             drawImagesheight = video.videoHeight/ (sectionheight / seatheight);
+
+            //             //             drawImageswidth = canvas.width / (sectionwidth/(video.videoWidth/96*25.4));
+            //             //drawImagesheight = canvas.height / (sectionheight/(video.videoHeight/96*25.4));
+            drawImagex = 0  //Var i canvasen, uppe i vänstra hörnet
+            drawImagey = 0;
+            drawImagewidth = canvas.width;   //Hela canvasens bredd används
+            drawImageheight = canvas.height;
+
+            video.hidden = true;
+            countDown1(time);
+            playCanvasWhenTimout2(time);
+
+
+        }
+        $("#PlayTicket1").click(function () {
+
+            canvas.width = $(window).width();
+            canvas.height = $(window).height();
+            drawImageimg = video;
+            drawImagesx = canvas.width / 3;
+            drawImagesy = 0;
+            drawImageswidth = canvas.width / 2;
+            drawImagesheight = canvas.height / 2;
+            drawImagex = 0;
+            drawImagey = 0;
+            drawImagewidth = canvas.width;
+            drawImageheight = canvas.height;
+            this.textContent = "testslut";
+            video.hidden = true;
+            countDown1();
+            playCanvasWhenTimout2();
+            this.textContent = "testslut1";
+            //document.getElementById('video').play();  //Borttaget det skall inte gå att stoppa
+            //document.getElementById('video').pause();
+        });
+        // Used to count down to to start of played canvas
+        function countDown1(time) {
+            var timestring = time;
+            var countDownDate = new Date(timestring);
+            //var timestring = EventDate.defaultValue;
+            //var countDownDate = new Date.getTime()+16000;
+            var now = new Date().getTime();
+            // Set the date we're counting down to
+            var distance = countDownDate - now;
+            // Update the count down every 1 second
+            var x = setInterval(function () {
+
+                // Get today's date and time
+                var now = new Date().getTime();
+
+                // Find the distance between now and the count down date
+                distance = countDownDate - now;
+
+                // Time calculations for days, hours, minutes and seconds
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor(distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
+                var minutes = Math.floor(distance % (1000 * 60 * 60)) / (1000 * 60);
+                var seconds = Math.floor(distance % (1000 * 60)) / 1000;
+
+                // Display the result in the element with id="demo"
+                document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+                    + minutes + "m " + seconds + "s ";
+
+                // If the count down is finished, write some text
+
+                if (distance < 0) {
+                    clearInterval(x);
+
+
+                    document.getElementById("demo").innerHTML = "EXPIRED";
+                }
+            }, 1000);
+        }
+        function playCanvasWhenTimout2(time) {
+            var timestring = time;
+            var countDownDate = new Date(timestring);
+            //canvas.width = 300;
+            //canvas.height = 200;
+
+            //var countDownDate = new Date().getTime() + 16000;
+            var now = new Date().getTime();
+            // Set the date we're counting down to
+            var distance = countDownDate - now;
+            setTimeout(function () {
+                video.play();
+                video.hidden = true;
+
+
+                requestAnimationFrame(step2);
+            }, distance);
+        }
+        function step2() {
+
+            ctx.drawImage(drawImageimg, drawImagesx, drawImagesy, drawImageswidth, drawImagesheight, drawImagex, drawImagey, drawImagewidth, drawImageheight);
+            requestAnimationFrame(step2);
+        }
+
+        function getDPI() {
+            var div = $("#dpix");
+            div = document.createElement("div");
+
+            div.style.height = "1in";
+
+            div.style.width = "1in";
+
+            div.style.top = "-100%";
+
+            div.style.left = "-100%";
+
+            div.style.position = "absolute";
+
+
+
+            document.body.appendChild(div);
+
+
+
+            var result = div.offsetHeight;
+
+
+
+            //document.body.removeChild( div );
+
+            document.body.removeChild(div);
+
+            return result;
+
+
+
+        }
+
+    </script>
+}
+

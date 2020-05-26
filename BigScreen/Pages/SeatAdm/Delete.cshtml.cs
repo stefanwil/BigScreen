@@ -11,9 +11,9 @@ namespace BigScreen.Pages.SeatAdm
 {
     public class DeleteModel : PageModel
     {
-        private readonly BigScreen.Models.BigScreenContext _context;
+        private readonly BigScreen.Data.BigScreenContext _context;
 
-        public DeleteModel(BigScreen.Models.BigScreenContext context)
+        public DeleteModel(BigScreen.Data.BigScreenContext context)
         {
             _context = context;
         }

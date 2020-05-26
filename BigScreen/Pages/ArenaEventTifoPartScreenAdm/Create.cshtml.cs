@@ -11,9 +11,9 @@ namespace BigScreen.Pages.ArenaEventTifoPartScreenAdm
 {
     public class CreateModel : PageModel
     {
-        private readonly BigScreen.Models.BigScreenContext _context;
+        private readonly BigScreen.Data.BigScreenContext _context;
 
-        public CreateModel(BigScreen.Models.BigScreenContext context)
+        public CreateModel(BigScreen.Data.BigScreenContext context)
         {
             _context = context;
         }
