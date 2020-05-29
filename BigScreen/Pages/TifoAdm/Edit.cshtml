@@ -5,7 +5,7 @@
     ViewData["Title"] = "Edit";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-}
+
 <div class="text-danger">
     @TempData["FailText"]
 </div>
@@ -19,7 +19,7 @@
 
 
     </video>*@
-<video id="video" preload="auto" >
+<video id="video" preload="auto">
     <source src="~/tifos/@Model.Tifo.Path.ToString()" type='@Model.Tifo.ContentType.ToString()' />
 
 
@@ -71,10 +71,152 @@
     </div>
 </div>
 
+<div id="dvItems" style="font-size:24px;">
+</div>
+<div id="dpix" style="font-size:24px;">
+</div>
+<input type="button" id="btnPost" value="Post Values">
+
+
+@Html.AntiForgeryToken()
+<h2 style="color:brown;">Result after Ajax Post</h2>
+<div id="dvPostItems">
+</div>
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script type="text/javascript" language="JavaScript">
+
+
+    $(document).ready(function () {
+        var height = video.videoHeight;
+        var width = video.videoWidth;
+
+
+
+
+
+
+
+        $.ajax({
+            type: "GET",
+            url: "/TifoAdm/Edit?handler=List",
+            contentType: "application/json",
+            dataType: "json",
+            success: function (response) {
+                var dvItems = $("#dvItems");
+                dvItems.empty();
+                $.each(response, function (i, item) {
+                    var $tr = $('<li>').append(item).appendTo(dvItems);
+                });
+
+
+                $('<li>').append(width.toString()).appendTo(dvItems);
+                $('<li>').append(height.toString()).appendTo(dvItems);
+
+
+
+
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+      
+        $('#btnPost').on('click', function () {
+        
+
+        var height = video.videoHeight;
+        var width = video.videoWidth;
+
+
+        $.ajax({
+            type: "POST",
+            url: "/TifoAdm/Edit?handler=Send ",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            //data: JSON.stringify({
+            data: JSON.stringify({
+
+                'VideoHeight': width.toString(),
+                'VideoWidth': height.toString(),
+                'Id': "@Model.Tifo.Id.ToString()",
+                'Title' : "@Model.Tifo.Title",
+                'Path': "@Model.Tifo.Path",
+                'ContentType': "@Model.Tifo.ContentType",
+                'LengthOfMedia': "@Model.Tifo.LengthOfMedia.ToString()"
+
+
+
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                var dvItems = $("#dvPostItems");
+                dvItems.empty();
+                $.each(response, function (i, item) {
+                    var $tr = $('<li>').append(item).appendTo(dvItems);
+                });
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+
+    })
+})
+
+        //window.onresize = function (event) {
+        //    SetWidthHeight();
+        //}
+        //function SetWidthHeight() {
+        //    var height = $(window).height();
+        //    var width = $(window).width();
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "/WindowSize?handler=Send",
+        //        beforeSend: function (xhr) {
+        //            xhr.setRequestHeader("XSRF-TOKEN",
+        //                $('input:hidden[name="__RequestVerificationToken"]').val());
+        //        },
+
+
+        //        data: {
+        //            'Height': height,
+        //            'Width': width
+        //        },
+
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: function (response) {
+        //            var dvItems = $("#dvPostItems");
+        //            dvItems.empty();
+        //            $.each(response, function (i, item) {
+        //                var $tr = $('<li>').append(item).appendTo(dvItems);
+        //            });
+        //        },
+        //        failure: function (response) {
+        //            alert(response);
+        //        }
+        //    })
+        //        .done(function (data) {
+        //            if (data.isFirst) {
+        //                window.location.reload();
+        //            };
+        //        }).fail(function (xhr) {
+        //            alert("Problem to retrieve browser size.");
+        //        });
+
+        //}
+        //$(function () {
+        //    SetWidthHeight();
+        //});
+
+</script>
 }

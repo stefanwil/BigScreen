@@ -31,7 +31,7 @@ namespace BigScreen.Pages
             return new JsonResult(lstString);
         }
 
-        public ActionResult OnPostSend()
+        public async Task<IActionResult> OnPostSendAsync()
         {
             string sPostValue1 = "";
             string sPostValue2 = "";

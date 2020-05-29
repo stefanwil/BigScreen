@@ -14,6 +14,11 @@
 <h1>Create</h1>
 
 <h4>Tifo</h4>
+<video id="video" preload="auto">
+    <source src="~/tifos/VID_20200514_123906_d436.mp4" type="video/mp4" />
+
+
+</video>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -31,26 +36,32 @@
                 <input asp-for="Tifo.Path" class="form-control" />
                 <span asp-validation-for="Tifo.Path" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Tifo.ContentType" class="control-label"></label>
-                <input asp-for="Tifo.ContentType" class="form-control" />
-                <span asp-validation-for="Tifo.ContentType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tifo.LengthOfMedia" class="control-label"></label>
-                <input asp-for="Tifo.LengthOfMedia" class="form-control" />
-                <span asp-validation-for="Tifo.LengthOfMedia" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tifo.TifoHeight" class="control-label"></label>
-                <input asp-for="Tifo.TifoHeight" class="form-control" />
-                <span asp-validation-for="Tifo.TifoHeight" class="text-danger"></span>
+            @*<div class="form-group">
+            <label asp-for="Tifo.ContentType" class="control-label"></label>
+            <input asp-for="Tifo.ContentType" class="form-control" />
+            <span asp-validation-for="Tifo.ContentType" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Tifo.LengthOfMedia" class="control-label"></label>
+            <input asp-for="Tifo.LengthOfMedia" class="form-control" />
+            <span asp-validation-for="Tifo.LengthOfMedia" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Tifo.TifoHeight" class="control-label"></label>
+            <input asp-for="Tifo.TifoHeight" class="form-control" />
+            <span asp-validation-for="Tifo.TifoHeight" class="text-danger"></span>
 
-            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Tifo.TifoWidth" class="control-label"></label>
+            <input asp-for="Tifo.TifoWidth" class="form-control" />
+            <span asp-validation-for="Tifo.TifoWidth" class="text-danger"></span>
+        </div>*@
             <div class="form-group">
-                <label asp-for="Tifo.TifoWidth" class="control-label"></label>
-                <input asp-for="Tifo.TifoWidth" class="form-control" />
-                <span asp-validation-for="Tifo.TifoWidth" class="text-danger"></span>
+                <div class="col-md-10">
+                    <p>Ladda upp en eller flera filer:</p>
+                    <input type="file" name="Tifo.MyUploadedFile" />
+                </div>
             </div>
             <div class="form-group">
                 <div class="col-md-10">
@@ -75,6 +86,141 @@
     <a asp-page="Index">Back to List</a>
 </div>
 
+
+
+
+<div id="dvItems" style="font-size:24px;">
+</div>
+<div id="dpix" style="font-size:24px;">
+</div>
+<input type="button" id="btnPost" value="Post Values">
+
+
+@Html.AntiForgeryToken()
+<h2 style="color:brown;">Result after Ajax Post</h2>
+<div id="dvPostItems">
+</div>
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript" language="JavaScript">
+
+
+        $(document).ready(function () {
+            var height = video.videoHeight;
+            var width = video.videoWidth;
+
+
+
+
+
+
+
+            $.ajax({
+                type: "GET",
+                url: "/TifoAdm/Create?handler=List",
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    if(response.data!="")
+                    document.getElementById("video").src = response.data.item;
+                   
+
+
+
+
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+            $('#btnPost').on('click', function () {
+
+               var height = video.videoHeight;
+            var width = video.videoWidth;
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "/TifoAdm/Create?handler=Send ",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    //data: JSON.stringify({
+                    data: JSON.stringify({
+
+                        'VideoHeight': width.toString(),
+                        'VideoWidth':height.toString()
+
+
+                    }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        var dvItems = $("#dvPostItems");
+                        dvItems.empty();
+                        $.each(response, function (i, item) {
+                            var $tr = $('<li>').append(item).appendTo(dvItems);
+                        });
+                    },
+                    failure: function (response) {
+                        alert(response);
+                    }
+                });
+
+            })
+        })
+
+            //window.onresize = function (event) {
+            //    SetWidthHeight();
+            //}
+            //function SetWidthHeight() {
+            //    var height = $(window).height();
+            //    var width = $(window).width();
+            //    $.ajax({
+            //        type: "POST",
+            //        url: "/WindowSize?handler=Send",
+            //        beforeSend: function (xhr) {
+            //            xhr.setRequestHeader("XSRF-TOKEN",
+            //                $('input:hidden[name="__RequestVerificationToken"]').val());
+            //        },
+
+
+            //        data: {
+            //            'Height': height,
+            //            'Width': width
+            //        },
+
+            //        contentType: "application/json; charset=utf-8",
+            //        dataType: "json",
+            //        success: function (response) {
+            //            var dvItems = $("#dvPostItems");
+            //            dvItems.empty();
+            //            $.each(response, function (i, item) {
+            //                var $tr = $('<li>').append(item).appendTo(dvItems);
+            //            });
+            //        },
+            //        failure: function (response) {
+            //            alert(response);
+            //        }
+            //    })
+            //        .done(function (data) {
+            //            if (data.isFirst) {
+            //                window.location.reload();
+            //            };
+            //        }).fail(function (xhr) {
+            //            alert("Problem to retrieve browser size.");
+            //        });
+
+            //}
+            //$(function () {
+            //    SetWidthHeight();
+            //});
+
+    </script>
 }

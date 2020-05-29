@@ -1,0 +1,1 @@
+[{"Id":0,"DeviceId":"9","Width":"2560","Height":"1600","DevicePixelRatio":"1","DotsPerInch":"96"},{"Id":0,"DeviceId":"10","Width":"2560","Height":"1600","DevicePixelRatio":"1","DotsPerInch":"96"}]

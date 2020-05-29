@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BigScreen.Models;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json;
 
 namespace BigScreen.Pages.TifoAdm
 {
@@ -15,6 +16,7 @@ namespace BigScreen.Pages.TifoAdm
     {
         private readonly BigScreen.Data.BigScreenContext _context;
         private readonly IHostingEnvironment hostingEnvironment;
+        private readonly Tifo Tifotemp = new Tifo();
 
         public CreateModel(BigScreen.Data.BigScreenContext context, IHostingEnvironment environment)
         {
@@ -43,35 +45,135 @@ namespace BigScreen.Pages.TifoAdm
                 var documentroot = Path.Combine(hostingEnvironment.WebRootPath, "tifos");
 
                 var fullpath = Path.Combine(documentroot, uniqueFileName);
+              
 
 
                 Tifo.MyUploadedFile.CopyTo(new FileStream(fullpath, FileMode.Create));
 
+              
+
                 //to do : Save uniqueFileName  to your db table   
 
-           
+
                 Tifo.Title = Tifo.MyUploadedFile.FileName;
                 Tifo.Path = uniqueFileName;
                 Tifo.ContentType = Tifo.MyUploadedFile.ContentType;
                 Tifo.LengthOfMedia = Tifo.MyUploadedFile.Length;
 
-                if (ModelState.IsValid)
-                {
-                    _context.Add(Tifo);
-                    await _context.SaveChangesAsync();
-                    TempData["SuccessText"] = $"Dokument: {Tifo.Title} skapades Ok!";
-                    return RedirectToPage("./Index");
-                }
 
-                TempData["FailText"] = $"Något gick fel vid skapandet av dokumentet. Försök igen";
+             
+
+
+
+                //to do : Save uniqueFileName  to your db table   
+
+
+                Tifotemp.Title = Tifo.MyUploadedFile.FileName;
+                Tifotemp.Path = uniqueFileName;
+                Tifotemp.ContentType = Tifo.MyUploadedFile.ContentType;
+                Tifotemp.LengthOfMedia = Tifo.MyUploadedFile.Length;
+                //if (ModelState.IsValid)
+                //{
+
+                //    _context.Add(Tifo);
+                //    await _context.SaveChangesAsync();
+                //    TempData["SuccessText"] = $"Dokument: {Tifo.Title} skapades Ok!";
+                //    return RedirectToPage("./Index");
+                //}
+
+                //TempData["FailText"] = $"Något gick fel vid skapandet av dokumentet. Försök igen";
 
             }
+            //TempData["FailText"] = $"Något gick fel vid skapandet av dokumentet. Försök igen";
+
+
+            //return RedirectToPage("./Index");
+            return Page();
+
+        }
+
+        public JsonResult OnGetList()
+        {
+            if(Tifo==null) return new JsonResult("");
+            if (Tifo.Path == null) Tifo.Path = "";
+            return new JsonResult(Tifo.Path);
+
+        }
+
+        public async Task<IActionResult> OnPostSendAsync()
+        //public ActionResult OnPostSend()
+        {
+
+            string sPostValue0 = "";
+            string sPostValue1 = "";
+
+
+
+            MemoryStream stream = new MemoryStream();
+            Request.Body.CopyTo(stream);
+            stream.Position = 0;
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string requestBody = reader.ReadToEnd();
+                if (requestBody.Length > 0)
+                {
+                    var obj = JsonConvert.DeserializeObject<Videoinfo>(requestBody);
+                    if (obj != null)
+                    {
+
+                        sPostValue0 = obj.VideoWidth;
+                        sPostValue1 = obj.VideoHeight;
+
+
+
+                        Tifo.TifoHeight = (int)(Convert.ToDecimal(obj.VideoHeight));
+                        Tifo.TifoWidth = (int)(Convert.ToDecimal(obj.VideoWidth));
+
+                        Tifo.Title = Tifotemp.Title;
+                        Tifo.Path = Tifotemp.Path;
+                        Tifo.ContentType = Tifotemp.ContentType;
+                        Tifo.LengthOfMedia = Tifotemp.LengthOfMedia;
+
+
+
+                    }
+                }
+            }
+
+
+            //return new JsonResult(lstString);
+
+            if (ModelState.IsValid)
+            {
+
+                _context.Add(Tifo);
+                await _context.SaveChangesAsync();
+                TempData["SuccessText"] = $"Dokument: {Tifo.Title} skapades Ok!";
+                //return RedirectToPage("./Index");
+            }
+
             TempData["FailText"] = $"Något gick fel vid skapandet av dokumentet. Försök igen";
 
 
-            return RedirectToPage("./Index");
-        }
+            TempData["FailText"] = $"Något gick fel vid skapandet av dokumentet. Försök igen";
+
+
+            //return RedirectToPage("./Index");
+            //return Page();
        
+
+        List<string> lstString = new List<string>
+            {
+                sPostValue0,
+                sPostValue1,
+
+
+            };
+            return new JsonResult(lstString);
+        }
+
+
+
 
         private string GetUniqueFileName(string fileName)
         {
