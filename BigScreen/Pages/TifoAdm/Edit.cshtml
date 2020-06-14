@@ -39,7 +39,7 @@
                 <input asp-for="Tifo.Title" class="form-control" />
                 <span asp-validation-for="Tifo.Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="Tifo.Path" class="control-label"></label>
                 <input asp-for="Tifo.Path" class="form-control" />
                 <span asp-validation-for="Tifo.Path" class="text-danger"></span>
@@ -63,7 +63,7 @@
                 <label asp-for="Tifo.TifoWidth" class="control-label"></label>
                 <input asp-for="Tifo.TifoWidth" class="form-control" />
                 <span asp-validation-for="Tifo.TifoWidth" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -79,7 +79,7 @@
 
 
 @Html.AntiForgeryToken()
-<h2 style="color:brown;">Result after Ajax Post</h2>
+<h2 style="color:brown;">Update video height and width</h2>
 <div id="dvPostItems">
 </div>
 <div>

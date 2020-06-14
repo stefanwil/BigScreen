@@ -55,7 +55,7 @@ namespace BigScreen.Pages.TifoAdm
                 //to do : Save uniqueFileName  to your db table   
 
 
-                Tifo.Title = Tifo.MyUploadedFile.FileName;
+                Tifo.Title = Tifo.Title;
                 Tifo.Path = uniqueFileName;
                 Tifo.ContentType = Tifo.MyUploadedFile.ContentType;
                 Tifo.LengthOfMedia = Tifo.MyUploadedFile.Length;
@@ -65,30 +65,24 @@ namespace BigScreen.Pages.TifoAdm
 
 
 
-                //to do : Save uniqueFileName  to your db table   
+                
+                if (ModelState.IsValid)
+                {
 
+                    _context.Add(Tifo);
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessText"] = $"Dokument: {Tifo.Title} skapades Ok!";
+                    return RedirectToPage("./Index");
+                }
 
-                Tifotemp.Title = Tifo.MyUploadedFile.FileName;
-                Tifotemp.Path = uniqueFileName;
-                Tifotemp.ContentType = Tifo.MyUploadedFile.ContentType;
-                Tifotemp.LengthOfMedia = Tifo.MyUploadedFile.Length;
-                //if (ModelState.IsValid)
-                //{
-
-                //    _context.Add(Tifo);
-                //    await _context.SaveChangesAsync();
-                //    TempData["SuccessText"] = $"Dokument: {Tifo.Title} skapades Ok!";
-                //    return RedirectToPage("./Index");
-                //}
-
-                //TempData["FailText"] = $"Något gick fel vid skapandet av dokumentet. Försök igen";
+                TempData["FailText"] = $"Något gick fel vid skapandet av dokumentet. Försök igen";
 
             }
-            //TempData["FailText"] = $"Något gick fel vid skapandet av dokumentet. Försök igen";
+            TempData["FailText"] = $"Något gick fel vid skapandet av dokumentet. Försök igen";
 
 
-            //return RedirectToPage("./Index");
-            return Page();
+            return RedirectToPage("./Index");
+            //return Page();
 
         }
 
