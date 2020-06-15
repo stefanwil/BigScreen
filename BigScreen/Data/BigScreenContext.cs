@@ -85,6 +85,7 @@ namespace BigScreen.Data
                 .HasOne(ub => ub.Seat)
                 .WithMany(b => b.UserSeats) // If you add `public ICollection<UserBook> UserBooks { get; set; }` navigation property to Book model class then replace `.WithMany()` with `.WithMany(b => b.UserBooks)`
                 .HasForeignKey(ub => ub.SeatId);
+          
 
         }
         public DbSet<BigScreen.Models.ArenaEventTifoPartScreen> ArenaEventTifoPartScreen { get; set; }

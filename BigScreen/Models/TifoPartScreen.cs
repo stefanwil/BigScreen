@@ -13,7 +13,7 @@ namespace BigScreen.Models
         public int TifoPartScreenWidth { get; set; }
         public int AbsScreenHeight { get; set; } //dimensions in mm(or inch)
         public int AbsScreenWidth { get; set; }
-        public decimal DotsPerPixel { get; set; }  //dots/css-pixel
+        public double DotsPerPixel { get; set; }  //dots/css-pixel
         public int DotsPerInch { get; set; }  //css-pixels/inch or mm?
         public string ApplicationUserId { get; set; } //FK
         public ApplicationUser ApplicationUser { get; set; }

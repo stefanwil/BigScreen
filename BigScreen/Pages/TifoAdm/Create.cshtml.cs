@@ -120,8 +120,8 @@ namespace BigScreen.Pages.TifoAdm
 
 
 
-                        Tifo.TifoHeight = (int)(Convert.ToDecimal(obj.VideoHeight));
-                        Tifo.TifoWidth = (int)(Convert.ToDecimal(obj.VideoWidth));
+                        Tifo.TifoHeight = (int)(Convert.ToInt32(obj.VideoHeight));
+                        Tifo.TifoWidth = (int)(Convert.ToInt32(obj.VideoWidth));
 
                         Tifo.Title = Tifotemp.Title;
                         Tifo.Path = Tifotemp.Path;

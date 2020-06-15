@@ -99,7 +99,7 @@
 
         //$.ajax({
         //    type: "GET",
-        //    url: "/TifoAdm/Edit?handler=List",
+        //    url: "/TifoAdm/GetVideoSize?handler=List",
         //    contentType: "application/json",
         //    dataType: "json",
         //    success: function (response) {
@@ -131,7 +131,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/TifoAdm/Edit?handler=Send ",
+            url: "/TifoAdm/GetVideoSize?handler=Send ",
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("XSRF-TOKEN",
                     $('input:hidden[name="__RequestVerificationToken"]').val());

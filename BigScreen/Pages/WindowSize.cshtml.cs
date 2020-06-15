@@ -106,9 +106,9 @@ namespace BigScreen.Pages
                             sPostValue4 = obj.DotsPerInch;
                             deviceWindow = obj;
                            
-                            Tifodisplay.DotsPerPixel = Convert.ToDecimal(obj.DevicePixelRatio);
-                            Tifodisplay.TifoPartScreenHeight = (int)(Convert.ToDecimal(obj.Height) * Tifodisplay.DotsPerPixel);
-                            Tifodisplay.TifoPartScreenWidth = (int)(Convert.ToDecimal(obj.Width) * Tifodisplay.DotsPerPixel);
+                            Tifodisplay.DotsPerPixel = Convert.ToDouble(obj.DevicePixelRatio);
+                            Tifodisplay.TifoPartScreenHeight = (int)(Convert.ToInt32(obj.Height) * Tifodisplay.DotsPerPixel);
+                            Tifodisplay.TifoPartScreenWidth = (int)(Convert.ToInt32(obj.Width) * Tifodisplay.DotsPerPixel);
                             Tifodisplay.DotsPerInch = Convert.ToInt32(obj.DotsPerInch);
                             Tifodisplay.AbsScreenHeight =  Convert.ToInt32(obj.Height) / Tifodisplay.DotsPerInch* 254/10;
                             Tifodisplay.AbsScreenWidth = Convert.ToInt32(obj.Width) / Tifodisplay.DotsPerInch * 254/10;
