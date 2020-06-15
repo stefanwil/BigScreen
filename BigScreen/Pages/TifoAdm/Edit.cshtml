@@ -33,6 +33,11 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Tifo.Id" />
+            <input type="hidden" asp-for="Tifo.Path" />
+            <input type="hidden" asp-for="Tifo.ContentType" />
+            <input type="hidden" asp-for="Tifo.LengthOfMedia" />
+            <input type="hidden" asp-for="Tifo.TifoHeight" />
+            <input type="hidden" asp-for="Tifo.TifoWidth" />
 
             <div class="form-group">
                 <label asp-for="Tifo.Title" class="control-label"></label>
@@ -40,30 +45,30 @@
                 <span asp-validation-for="Tifo.Title" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-                <label asp-for="Tifo.Path" class="control-label"></label>
-                <input asp-for="Tifo.Path" class="form-control" />
-                <span asp-validation-for="Tifo.Path" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tifo.ContentType" class="control-label"></label>
-                <input asp-for="Tifo.ContentType" class="form-control" />
-                <span asp-validation-for="Tifo.ContentType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tifo.LengthOfMedia" class="control-label"></label>
-                <input asp-for="Tifo.LengthOfMedia" class="form-control" />
-                <span asp-validation-for="Tifo.LengthOfMedia" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tifo.TifoHeight" class="control-label"></label>
-                <input asp-for="Tifo.TifoHeight" class="form-control" />
-                <span asp-validation-for="Tifo.TifoHeight" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Tifo.TifoWidth" class="control-label"></label>
-                <input asp-for="Tifo.TifoWidth" class="form-control" />
-                <span asp-validation-for="Tifo.TifoWidth" class="text-danger"></span>
-            </div>*@
+            <label asp-for="Tifo.Path" class="control-label"></label>
+            <input asp-for="Tifo.Path" class="form-control" />
+            <span asp-validation-for="Tifo.Path" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Tifo.ContentType" class="control-label"></label>
+            <input asp-for="Tifo.ContentType" class="form-control" />
+            <span asp-validation-for="Tifo.ContentType" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Tifo.LengthOfMedia" class="control-label"></label>
+            <input asp-for="Tifo.LengthOfMedia" class="form-control" />
+            <span asp-validation-for="Tifo.LengthOfMedia" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Tifo.TifoHeight" class="control-label"></label>
+            <input asp-for="Tifo.TifoHeight" class="form-control" />
+            <span asp-validation-for="Tifo.TifoHeight" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Tifo.TifoWidth" class="control-label"></label>
+            <input asp-for="Tifo.TifoWidth" class="form-control" />
+            <span asp-validation-for="Tifo.TifoWidth" class="text-danger"></span>
+        </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -71,152 +76,13 @@
     </div>
 </div>
 
-<div id="dvItems" style="font-size:24px;">
-</div>
-<div id="dpix" style="font-size:24px;">
-</div>
-<input type="button" id="btnPost" value="Post Values">
 
-
-@Html.AntiForgeryToken()
-<h2 style="color:brown;">Update video height and width</h2>
-<div id="dvPostItems">
-</div>
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-<script type="text/javascript" language="JavaScript">
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
 
-
-    $(document).ready(function () {
-        var height = video.videoHeight;
-        var width = video.videoWidth;
-
-
-
-
-
-
-
-        $.ajax({
-            type: "GET",
-            url: "/TifoAdm/Edit?handler=List",
-            contentType: "application/json",
-            dataType: "json",
-            success: function (response) {
-                var dvItems = $("#dvItems");
-                dvItems.empty();
-                $.each(response, function (i, item) {
-                    var $tr = $('<li>').append(item).appendTo(dvItems);
-                });
-
-
-                $('<li>').append(width.toString()).appendTo(dvItems);
-                $('<li>').append(height.toString()).appendTo(dvItems);
-
-
-
-
-            },
-            failure: function (response) {
-                alert(response);
-            }
-        });
-      
-        $('#btnPost').on('click', function () {
-        
-
-        var height = video.videoHeight;
-        var width = video.videoWidth;
-
-
-        $.ajax({
-            type: "POST",
-            url: "/TifoAdm/Edit?handler=Send ",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("XSRF-TOKEN",
-                    $('input:hidden[name="__RequestVerificationToken"]').val());
-            },
-            //data: JSON.stringify({
-            data: JSON.stringify({
-
-                'VideoHeight': width.toString(),
-                'VideoWidth': height.toString(),
-                'Id': "@Model.Tifo.Id.ToString()",
-                'Title' : "@Model.Tifo.Title",
-                'Path': "@Model.Tifo.Path",
-                'ContentType': "@Model.Tifo.ContentType",
-                'LengthOfMedia': "@Model.Tifo.LengthOfMedia.ToString()"
-
-
-
-            }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                var dvItems = $("#dvPostItems");
-                dvItems.empty();
-                $.each(response, function (i, item) {
-                    var $tr = $('<li>').append(item).appendTo(dvItems);
-                });
-            },
-            failure: function (response) {
-                alert(response);
-            }
-        });
-
-    })
-})
-
-        //window.onresize = function (event) {
-        //    SetWidthHeight();
-        //}
-        //function SetWidthHeight() {
-        //    var height = $(window).height();
-        //    var width = $(window).width();
-        //    $.ajax({
-        //        type: "POST",
-        //        url: "/WindowSize?handler=Send",
-        //        beforeSend: function (xhr) {
-        //            xhr.setRequestHeader("XSRF-TOKEN",
-        //                $('input:hidden[name="__RequestVerificationToken"]').val());
-        //        },
-
-
-        //        data: {
-        //            'Height': height,
-        //            'Width': width
-        //        },
-
-        //        contentType: "application/json; charset=utf-8",
-        //        dataType: "json",
-        //        success: function (response) {
-        //            var dvItems = $("#dvPostItems");
-        //            dvItems.empty();
-        //            $.each(response, function (i, item) {
-        //                var $tr = $('<li>').append(item).appendTo(dvItems);
-        //            });
-        //        },
-        //        failure: function (response) {
-        //            alert(response);
-        //        }
-        //    })
-        //        .done(function (data) {
-        //            if (data.isFirst) {
-        //                window.location.reload();
-        //            };
-        //        }).fail(function (xhr) {
-        //            alert("Problem to retrieve browser size.");
-        //        });
-
-        //}
-        //$(function () {
-        //    SetWidthHeight();
-        //});
-
-</script>
-}
