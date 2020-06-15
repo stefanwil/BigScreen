@@ -1,0 +1,219 @@
+﻿@page
+@model BigScreen.GetVideoSizeModel
+@{
+    ViewData["Title"] = "GetVideoSize";
+}
+
+<h1>GetVideoSize</h1>
+
+<div class="text-danger">
+    @TempData["FailText"]
+</div>
+<div class="text-success">
+    @TempData["SuccessText"]
+</div>
+
+
+<video id="video" preload="auto">
+    <source src="~/tifos/@Model.Tifo.Path.ToString()" type='@Model.Tifo.ContentType.ToString()' />
+
+
+</video>
+
+<h4>Tifo</h4>
+<hr />
+@*<div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Tifo.Id" />
+
+                <div class="form-group">
+                    <label asp-for="Tifo.Title" class="control-label"></label>
+                    <input asp-for="Tifo.Title" class="form-control" />
+                    <span asp-validation-for="Tifo.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                        <label asp-for="Tifo.Path" class="control-label"></label>
+                        <input asp-for="Tifo.Path" class="form-control" />
+                        <span asp-validation-for="Tifo.Path" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tifo.ContentType" class="control-label"></label>
+                        <input asp-for="Tifo.ContentType" class="form-control" />
+                        <span asp-validation-for="Tifo.ContentType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tifo.LengthOfMedia" class="control-label"></label>
+                        <input asp-for="Tifo.LengthOfMedia" class="form-control" />
+                        <span asp-validation-for="Tifo.LengthOfMedia" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tifo.TifoHeight" class="control-label"></label>
+                        <input asp-for="Tifo.TifoHeight" class="form-control" />
+                        <span asp-validation-for="Tifo.TifoHeight" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tifo.TifoWidth" class="control-label"></label>
+                        <input asp-for="Tifo.TifoWidth" class="form-control" />
+                        <span asp-validation-for="Tifo.TifoWidth" class="text-danger"></span>
+                    </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>*@
+
+@*<div id="dvItems" style="font-size:24px;">
+    </div>
+    <div id="dpix" style="font-size:24px;">
+    </div>*@
+<h3 style="color:brown;">Update video height and width</h3>
+
+<input type="button" id="btnPost" value="Get Size">
+
+
+@Html.AntiForgeryToken()
+<div id="dvPostItems">
+</div>
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript" language="JavaScript">
+
+
+    $(document).ready(function () {
+        var height = video.videoHeight;
+        var width = video.videoWidth;
+
+
+
+
+
+
+
+        //$.ajax({
+        //    type: "GET",
+        //    url: "/TifoAdm/Edit?handler=List",
+        //    contentType: "application/json",
+        //    dataType: "json",
+        //    success: function (response) {
+        //        var dvItems = $("#dvItems");
+        //        dvItems.empty();
+        //        $.each(response, function (i, item) {
+        //            var $tr = $('<li>').append(item).appendTo(dvItems);
+        //        });
+
+
+        //        $('<li>').append(width.toString()).appendTo(dvItems);
+        //        $('<li>').append(height.toString()).appendTo(dvItems);
+
+
+
+
+        //    },
+        //    failure: function (response) {
+        //        alert(response);
+        //    }
+        //});
+
+        $('#btnPost').on('click', function () {
+
+
+        var height = video.videoHeight;
+        var width = video.videoWidth;
+
+
+        $.ajax({
+            type: "POST",
+            url: "/TifoAdm/Edit?handler=Send ",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            //data: JSON.stringify({
+            data: JSON.stringify({
+
+                'VideoHeight': width.toString(),
+                'VideoWidth': height.toString(),
+                'Id': "@Model.Tifo.Id.ToString()",
+                'Title' : "@Model.Tifo.Title",
+                'Path': "@Model.Tifo.Path",
+                'ContentType': "@Model.Tifo.ContentType",
+                'LengthOfMedia': "@Model.Tifo.LengthOfMedia.ToString()"
+
+
+
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                var dvItems = $("#dvPostItems");
+                dvItems.empty();
+                $.each(response, function (i, item) {
+                    var $tr = $('<li>').append(item).appendTo(dvItems);
+                });
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+
+    })
+})
+
+        //window.onresize = function (event) {
+        //    SetWidthHeight();
+        //}
+        //function SetWidthHeight() {
+        //    var height = $(window).height();
+        //    var width = $(window).width();
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "/WindowSize?handler=Send",
+        //        beforeSend: function (xhr) {
+        //            xhr.setRequestHeader("XSRF-TOKEN",
+        //                $('input:hidden[name="__RequestVerificationToken"]').val());
+        //        },
+
+
+        //        data: {
+        //            'Height': height,
+        //            'Width': width
+        //        },
+
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: function (response) {
+        //            var dvItems = $("#dvPostItems");
+        //            dvItems.empty();
+        //            $.each(response, function (i, item) {
+        //                var $tr = $('<li>').append(item).appendTo(dvItems);
+        //            });
+        //        },
+        //        failure: function (response) {
+        //            alert(response);
+        //        }
+        //    })
+        //        .done(function (data) {
+        //            if (data.isFirst) {
+        //                window.location.reload();
+        //            };
+        //        }).fail(function (xhr) {
+        //            alert("Problem to retrieve browser size.");
+        //        });
+
+        //}
+        //$(function () {
+        //    SetWidthHeight();
+        //});
+
+    </script>
+}
+
+
