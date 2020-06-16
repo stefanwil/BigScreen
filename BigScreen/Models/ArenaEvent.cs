@@ -10,9 +10,9 @@ namespace BigScreen.Models
         public int Id { get; set; }
         
         public string EventName { get; set; }  //Name for this event example AIK-DIF Final
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         //[DisplayFormat(DataFormatString = "{0:d}")]
-        [Display(Name = "Date of event")]
+        [Display(Name = "Date and time of event")]
         public DateTime EventDate { get; set; }
        
         public string ContentType { get; set; }
