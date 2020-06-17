@@ -4,11 +4,11 @@
 @{
     ViewData["Title"] = "WindowSize";
 }
-    <video id="video" preload="auto" n width="756" height="1344">
+    @*<video id="video" preload="auto" n width="756" height="1344">
         <source src="~/Tifos/VID_20200514_123906_d436.mp4" type='video/mp4' />
         
 
-    </video>
+    </video>*@
 
 <h1>WindowSize</h1>
 <h1>Demo</h1>
@@ -50,8 +50,8 @@
             //var height = $(window).height();
             var devicePixelRatio = window.devicePixelRatio;
             var dotsPerInch = getDPI();
-            var videoheight = video.videoHeight;
-            var videowidth = video.videoWidth;
+            //var videoheight = video.videoHeight;
+            //var videowidth = video.videoWidth;
             height = screen.height;
             width = screen.width;
             var div = document.createElement("div");
@@ -79,8 +79,8 @@
                     $('<li>').append(height).appendTo(dvItems);
                     $('<li>').append(width).appendTo(dvItems);
                     $('<li>').append(dotsPerInch).appendTo(dvItems);
-                    $('<li>').append(videowidth).appendTo(dvItems);
-                           $('<li>').append(videoheight).appendTo(dvItems);
+                    //$('<li>').append(videowidth).appendTo(dvItems);
+                    //       $('<li>').append(videoheight).appendTo(dvItems);
 
 
 
