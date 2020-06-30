@@ -194,13 +194,14 @@ var canvas = document.getElementById('canvas');
 
         function PlayTicket2(time, tifowidth, tifoheight, sectionwidth, sectionheight, sectionoffsetx, sectionoffsety) {
             var devicePixelRatio = window.devicePixelRatio;
+            var cookieHeight = getCookie("rectHeight");
+            var twoinch = parseInt(cookieHeight);
             var dotsPerInch = getDPI();
                drawImageimg = video;  //videon som skall spelas upp
-            drawImageswidth = (screen.width * 25.4* tifowidth)/ (dotsPerInch *sectionwidth );//Displayens Screenwidt in css-pixels dividerat med antalpixels per tum
+            drawImageswidth = (screen.width* tifowidth*twoinch/2*)/ (dotsPerInch *sectionwidth );//Displayens Screenwidt in css-pixels dividerat med antalpixels per tum
             //för displayen*videons bredd/arena sectionens bredd => bredden på det utklippta området i pixels (eller csspixels)
-            drawImagesheight = (screen.height* 25.4* tifoheight ) / (dotsPerInch *sectionheight );
-          //window.width = 2 * $(window).width();
-            //Test med två fönster bredvid varandra på datorn 
+            drawImagesheight = (screen.height*tifoheight*twoinch/2) / (dotsPerInch *sectionheight );
+          //window.width = 2 * $(window).width();            //Test med två fönster bredvid varandra på datorn 
             //drawImageswidth = ($(window).width() / dotsPerInch * 25.4) * tifowidth / sectionwidth  //Displayens Screenwidt in css-pixels dividerat med antalpixels per tum
             ////för displayen*videons bredd/arena sectionens bredd => bredden på det utklippta området i pixels (eller csspixels)
             //drawImagesheight = ($(window).height() / dotsPerInch * 25.4) * tifoheight / sectionheight
@@ -350,6 +351,26 @@ var canvas = document.getElementById('canvas');
 
 
         }
+
+        function getCookie(name) {
+    // Split cookie string and get all individual name=value pairs in an array
+    var cookieArr = document.cookie.split(";");
+    
+    // Loop through the array elements
+    for(var i = 0; i < cookieArr.length; i++) {
+        var cookiePair = cookieArr[i].split("=");
+        
+        /* Removing whitespace at the beginning of the cookie name
+        and compare it with the given string */
+        if(name == cookiePair[0].trim()) {
+            // Decode the cookie value and return
+            return decodeURIComponent(cookiePair[1]);
+        }
+    }
+    
+    // Return null if not found
+    return null;
+}
 
     </script>
 }

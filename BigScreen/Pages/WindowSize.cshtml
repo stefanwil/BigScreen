@@ -18,14 +18,25 @@
 </div>
 <div id="dpix" style="font-size:24px;">
 </div>
+<div style="background-color: red; width: 2in; height: 2in;"></div>
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="SetDevice">
+        <form asp-action="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="DeviceId" class="control-label"></label>
                 <input asp-for="DeviceId" class="form-control" />
                 <span asp-validation-for="DeviceId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Width" class="control-label"></label>
+                <input asp-for="Width" class="form-control" />
+                <span asp-validation-for="Width" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Height" class="control-label"></label>
+                <input asp-for="Height" class="form-control" />
+                <span asp-validation-for="Height" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="SetDevice" class="btn btn-primary" />
@@ -177,7 +188,8 @@
         function getDPI() {
             var div = $("#dpix");
             div = document.createElement("div");
-
+            
+        
             div.style.height = "1in";
 
             div.style.width = "1in";

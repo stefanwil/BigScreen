@@ -48,12 +48,19 @@ namespace BigScreen.Pages
             return new JsonResult(lstString);
 
         }
-
-        public JsonResult OnSetDevice([Bind("DeviceId")]  WindowSizeModel windowSizeModel)
+     
+     
+        public IActionResult OnPost()
+        //public JsonResult OnSetDevice([Bind("DeviceId,Height,Width")]  WindowSizeModel windowSizeModel)
         {
             if (ModelState.IsValid)
             {
-                var deviceId = windowSizeModel.DeviceId;
+                var deviceId = DeviceId;
+                var height = Height;
+                var width = Width;
+                Response.Cookies.Append("rectHeight", height.ToString());  // stefan set test cookie
+                Response.Cookies.Append("rectWidth", width.ToString());  // stefan set test cookie
+
 
 
                 //var settingroot = Path.Combine(hostingEnvironment.WebRootPath, "settings");
@@ -72,12 +79,14 @@ namespace BigScreen.Pages
             }
 
 
-            return new JsonResult(DeviceId);
+            //return new JsonResult(DeviceId);
+            return Page();
 
         }
         public async Task<IActionResult> OnPostSendAsync()
         //public ActionResult OnPostSend()
         {
+            var cookieValue = Request.Cookies["MyCookie"]; //Read Test vccokie/Stefan
             var deviceWindow = new DeviceWindow();
             var Tifodisplay = new TifoPartScreen();
             var devices = new List<DeviceWindow>();
@@ -86,6 +95,7 @@ namespace BigScreen.Pages
             string sPostValue2 = "";
             string sPostValue3 = "";
             string sPostValue4 = "";
+            Response.Cookies.Append("MyCookie", "value1");  // stefan set test cookie
 
             {
                 MemoryStream stream = new MemoryStream();
