@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -86,6 +87,11 @@ namespace BigScreen.Pages
         public async Task<IActionResult> OnPostSendAsync()
         //public ActionResult OnPostSend()
         {
+            // Create a NumberFormatInfo object and set some of its properties.
+            NumberFormatInfo provider = new NumberFormatInfo();
+            provider.NumberDecimalSeparator = ",";
+            provider.NumberGroupSeparator = ".";
+            provider.NumberGroupSizes = new int[] { 3 };
             var cookieValue = Request.Cookies["MyCookie"]; //Read Test vccokie/Stefan
             var deviceWindow = new DeviceWindow();
             var Tifodisplay = new TifoPartScreen();
@@ -115,7 +121,23 @@ namespace BigScreen.Pages
                             sPostValue3 = obj.DevicePixelRatio;
                             sPostValue4 = obj.DotsPerInch;
                             deviceWindow = obj;
-                           
+                            try
+                            {
+                                Tifodisplay.DotsPerPixel = Convert.ToDouble(obj.DevicePixelRatio);
+                            }
+                            catch (FormatException e)
+                            {
+                                try
+                                {
+                                    Tifodisplay.DotsPerPixel = Convert.ToDouble(obj.DevicePixelRatio, provider);
+                                 
+                                }
+                                catch (FormatException f)
+                                {
+                                    Console.WriteLine("{0,-20} ", f.GetType().Name);
+                                }
+                      
+                            }
                             Tifodisplay.DotsPerPixel = Convert.ToDouble(obj.DevicePixelRatio);
                             Tifodisplay.TifoPartScreenHeight = (int)(Convert.ToInt32(obj.Height) * Tifodisplay.DotsPerPixel);
                             Tifodisplay.TifoPartScreenWidth = (int)(Convert.ToInt32(obj.Width) * Tifodisplay.DotsPerPixel);
