@@ -15,6 +15,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Seat[0].SeatId)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Seat[0].SectionRow)
             </th>
             <th>
@@ -35,6 +38,9 @@
     <tbody>
 @foreach (var item in Model.Seat) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SeatId)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SectionRow)
             </td>

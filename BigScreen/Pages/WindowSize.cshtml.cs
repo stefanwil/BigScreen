@@ -61,6 +61,7 @@ namespace BigScreen.Pages
                 var width = Width;
                 Response.Cookies.Append("rectHeight", height.ToString());  // stefan set test cookie
                 Response.Cookies.Append("rectWidth", width.ToString());  // stefan set test cookie
+                Response.Cookies.Append("rectSizeinInches", "4");  // stefan set test cookie, 4 inches in squere
 
 
 
