@@ -89,8 +89,8 @@ namespace BigScreen.Pages
         {
             // Create a NumberFormatInfo object and set some of its properties.
             NumberFormatInfo provider = new NumberFormatInfo();
-            provider.NumberDecimalSeparator = ",";
-            provider.NumberGroupSeparator = ".";
+            provider.NumberDecimalSeparator = ".";
+            provider.NumberGroupSeparator = ",";
             provider.NumberGroupSizes = new int[] { 3 };
             var cookieValue = Request.Cookies["MyCookie"]; //Read Test vccokie/Stefan
             var deviceWindow = new DeviceWindow();
@@ -138,7 +138,7 @@ namespace BigScreen.Pages
                                 }
                       
                             }
-                            Tifodisplay.DotsPerPixel = Convert.ToDouble(obj.DevicePixelRatio);
+                            
                             Tifodisplay.TifoPartScreenHeight = (int)(Convert.ToInt32(obj.Height) * Tifodisplay.DotsPerPixel);
                             Tifodisplay.TifoPartScreenWidth = (int)(Convert.ToInt32(obj.Width) * Tifodisplay.DotsPerPixel);
                             Tifodisplay.DotsPerInch = Convert.ToInt32(obj.DotsPerInch);
